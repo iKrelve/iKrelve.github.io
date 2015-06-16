@@ -11,16 +11,17 @@
     
 
     
-    <meta name="description" content="简单的记录一下AccessibilityService的使用方法：1.新建一个类，继承自AccessibilityService，并重写两个方法：">
+    <meta name="description" content="简单的记录一下AccessibilityService的使用方法:1.新建一个类，继承自AccessibilityService，并重写两个方法：123456789101112131415package krelve.demo.k_accessibility;import android.accessibilityservice.AccessibilityService;import androi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AccessibilityService 简单应用">
 <meta property="og:url" content="http://yoursite.com/2015/03/01/AccessibilityService 简单应用/index.html">
 <meta property="og:site_name" content="Krelve技术之旅">
-<meta property="og:description" content="简单的记录一下AccessibilityService的使用方法：1.新建一个类，继承自AccessibilityService，并重写两个方法：">
-<meta property="og:updated_time" content="2015-06-16T12:43:00.370Z">
+<meta property="og:description" content="简单的记录一下AccessibilityService的使用方法:1.新建一个类，继承自AccessibilityService，并重写两个方法：123456789101112131415package krelve.demo.k_accessibility;import android.accessibilityservice.AccessibilityService;import androi">
+<meta property="og:image" content="http://7xjs0n.com1.z0.glb.clouddn.com/34ae1425200872.png">
+<meta property="og:updated_time" content="2015-06-16T13:42:46.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AccessibilityService 简单应用">
-<meta name="twitter:description" content="简单的记录一下AccessibilityService的使用方法：1.新建一个类，继承自AccessibilityService，并重写两个方法：">
+<meta name="twitter:description" content="简单的记录一下AccessibilityService的使用方法:1.新建一个类，继承自AccessibilityService，并重写两个方法：123456789101112131415package krelve.demo.k_accessibility;import android.accessibilityservice.AccessibilityService;import androi">
 
     
     <link rel="alternative" href="/atom.xml" title="Krelve技术之旅" type="application/atom+xml">
@@ -89,14 +90,11 @@
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			
-		
-		</div>
-		
-		<p><strong>简单的记录一下AccessibilityService的使用方法：</strong><br>1.新建一个类，继承自AccessibilityService，并重写两个方法：</p>
+		<h3 id="简单的记录一下AccessibilityService的使用方法:">简单的记录一下AccessibilityService的使用方法:</h3><p>1.新建一个类，继承自AccessibilityService，并重写两个方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> krelve.demo.k_accessibility;</span><br><span class="line"><span class="keyword">import</span> android.accessibilityservice.AccessibilityService;</span><br><span class="line"><span class="keyword">import</span> android.view.accessibility.AccessibilityEvent;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Kccessibility</span> <span class="keyword">extends</span> <span class="title">AccessibilityService</span> </span>&#123;</span><br><span class="line"> <span class="annotation">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAccessibilityEvent</span><span class="params">(AccessibilityEvent event)</span> </span>&#123;</span><br><span class="line"><span class="comment">//通过这个函数可以接收系统发送来的AccessibilityEvent，接收来的        AccessibilityEvent是经过过滤的，过滤是在配置工作时设</span></span><br><span class="line"></span><br><span class="line">置的。</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="annotation">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onInterrupt</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">//这个在系统想要中断AccessibilityService返给的响应时会调用。在整个生命周期里会被调用多次。</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.在AndroidManifest.xml中声明它：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">service</span></span><br><span class="line">      <span class="attribute">android:name</span>=<span class="value">"krelve.demo.k_accessibility.Kccessibility"</span></span><br><span class="line">      <span class="attribute">android:label</span>=<span class="value">"@string/app_name"</span></span><br><span class="line">      <span class="attribute">android:permission</span>=<span class="value">"android.permission.BIND_ACCESSIBILITY_SERVICE"</span> &gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">action</span>  <span class="attribute">android:name</span>=<span class="value">"android.accessibilityservice.AccessibilityService"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">meta-data</span></span><br><span class="line">          <span class="attribute">android:name</span>=<span class="value">"android.accessibilityservice"</span></span><br><span class="line">          <span class="attribute">android:resource</span>=<span class="value">"@xml/accessibility_service_config"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在android 4.0以后，AccessibilityService得到了极大改善，比如说可以通过&lt;meta-data&gt;来对AccessibilityService进行配置。<br>3.配置@xml/accessibility_service_config：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">accessibility-service</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:accessibilityEventTypes</span>=<span class="value">"typeAllMask"</span></span><br><span class="line">    <span class="attribute">android:accessibilityFeedbackType</span>=<span class="value">"feedbackSpoken"</span></span><br><span class="line">    <span class="attribute">android:accessibilityFlags</span>=<span class="value">"flagDefault"</span></span><br><span class="line">    <span class="attribute">android:canRetrieveWindowContent</span>=<span class="value">"true"</span></span><br><span class="line">    <span class="attribute">android:description</span>=<span class="value">"@string/hello_world"</span></span><br><span class="line">    <span class="attribute">android:notificationTimeout</span>=<span class="value">"100"</span></span><br><span class="line">    <span class="attribute">android:packageNames</span>=<span class="value">"com.example.android.apis"</span></span><br><span class="line">  <span class="attribute">android:settingsActivity</span>=<span class="value">"com.example.android.accessibility.ServiceSettingsActivity"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>4.这时已经配置完成了一个基本的AccessibilityService，但是当然不能让用户手动去设置页面中寻找服务，所以要直接打开对应的页面：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">      Intent intent = <span class="keyword">new</span> Intent(</span><br><span class="line">      android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);</span><br><span class="line">      startActivity(intent);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p> 5.点击事件触发效果：<br><img src="http://7xjs0n.com1.z0.glb.clouddn.com/34ae1425200872.png" alt=""><br>这样就建立了一个最基本的AccessibilityService，具体应用，会用一个微信抢红包的例子来解读。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -128,10 +126,10 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/06/16/androidTest/" title="androidDemo">
+ <a href="/2015/06/16/markdown/" title="MarkDown">
   <strong>上一篇：</strong><br/>
   <span>
-  androidDemo</span>
+  MarkDown</span>
 </a>
 </div>
 
@@ -150,7 +148,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单的记录一下AccessibilityService的使用方法:"><span class="toc-number">1.</span> <span class="toc-text">简单的记录一下AccessibilityService的使用方法:</span></a></li></ol>
  
   </div>
 
@@ -159,17 +157,6 @@
 <aside class="clearfix">
 
   
-<div class="categorieslist">
-	<p class="asidetitle">分类</p>
-		<ul>
-		
-		  
-			<li><a href="/categories/android/" title="android">android<sup>1</sup></a></li>
-		  
-		
-		</ul>
-</div>
-
 
   
 <div class="tagslist">
