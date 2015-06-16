@@ -4,10 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>简单应用 | Krelve技术之旅</title>
+    <title>AccessibilityService 简单应用 | Krelve技术之旅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="krelve">
+    
+    <meta name="description" content="简单的记录一下AccessibilityService的使用方法：1.新建一个类，继承自AccessibilityService，并重写两个方法：12345678910@requires_authorizationdef somefunc(param1=&#39;&#39;, param2=0):    &#39;&#39;&#39;A ">
     
     
     
@@ -39,7 +41,7 @@
 					
 						<li><a href="/">首页</a></li>
 					
-						<li><a href="/archives">归档</a></li>
+						<li><a href="/categories/android">android</a></li>
 					
 					<li>
 					
@@ -61,7 +63,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/01/AccessibilityService 简单应用/" title="简单应用" itemprop="url">简单应用</a>
+      <a href="/2015/03/01/AccessibilityService 简单应用/" title="AccessibilityService 简单应用" itemprop="url">AccessibilityService 简单应用</a>
   </h1>
   <p class="article-author">By
     
@@ -69,7 +71,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-03-01T08:54:02.000Z" itemprop="datePublished">2015-03-01</time>
-    更新日期:<time datetime="2015-06-16T11:42:44.091Z" itemprop="dateModified">2015-06-16</time>
+    更新日期:<time datetime="2015-06-16T12:12:53.068Z" itemprop="dateModified">2015-06-16</time>
     
   </p>
 </header>
@@ -81,16 +83,22 @@
 		
 		</div>
 		
-		  
+		<p><strong>简单的记录一下AccessibilityService的使用方法：</strong><br>1.新建一个类，继承自AccessibilityService，并重写两个方法：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@requires_authorization</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">somefunc</span><span class="params">(param1=<span class="string">''</span>, param2=<span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="string">'''A docstring'''</span></span><br><span class="line">    <span class="keyword">if</span> param1 &gt; param2: <span class="comment"># interesting</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">'Greater'</span></span><br><span class="line">    <span class="keyword">return</span> (param2 - param1 + <span class="number">1</span>) <span class="keyword">or</span> <span class="keyword">None</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>message = <span class="string">'''interpreter</span><br><span class="line"><span class="prompt">... </span>prompt'''</span></span><br></pre></td></tr></table></figure></p>
+  
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/android/">android</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/03/01/AccessibilityService 简单应用/" data-title="简单应用 | Krelve技术之旅" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/03/01/AccessibilityService 简单应用/" data-title="AccessibilityService 简单应用 | Krelve技术之旅" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -139,6 +147,15 @@
 
 
   
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/android/" title="android">android<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
 
   <div class="rsspart">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
