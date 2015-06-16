@@ -1,0 +1,426 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>AccessibilityService 功能详解 | Krelve技术之旅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="krelve">
+    
+
+    
+    <meta name="description" content="在前面一篇文章中，介绍了如何建立一个简单的AccessibilityService服务，并可以在辅助设置中找到该服务的开启选项。这篇文章来说一下里面的配置参数与功能上的一些用法。12345678&amp;lt;accessibility-service xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;    android:accessi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AccessibilityService 功能详解">
+<meta property="og:url" content="http://yoursite.com/2015/03/02/AccessibilityService 功能详解/index.html">
+<meta property="og:site_name" content="Krelve技术之旅">
+<meta property="og:description" content="在前面一篇文章中，介绍了如何建立一个简单的AccessibilityService服务，并可以在辅助设置中找到该服务的开启选项。这篇文章来说一下里面的配置参数与功能上的一些用法。12345678&amp;lt;accessibility-service xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;    android:accessi">
+<meta property="og:image" content="http://7xjs0n.com1.z0.glb.clouddn.com/f7f01425262623.png">
+<meta property="og:updated_time" content="2015-06-16T14:56:03.728Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AccessibilityService 功能详解">
+<meta name="twitter:description" content="在前面一篇文章中，介绍了如何建立一个简单的AccessibilityService服务，并可以在辅助设置中找到该服务的开启选项。这篇文章来说一下里面的配置参数与功能上的一些用法。12345678&amp;lt;accessibility-service xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;    android:accessi">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Krelve技术之旅" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Krelve技术之旅">Krelve技术之旅</a></h1>
+				<h2 class="blog-motto">用代码渲染生活</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/android">Android</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/02/AccessibilityService 功能详解/" title="AccessibilityService 功能详解" itemprop="url">AccessibilityService 功能详解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="krelve" target="_blank" itemprop="author">krelve</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-02T02:04:36.000Z" itemprop="datePublished"> 发表于 2015-03-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<p>在前面一篇文章中，介绍了如何建立一个简单的AccessibilityService服务，并可以在辅助设置中找到该服务的开启选项。<br>这篇文章来说一下里面的配置参数与功能上的一些用法。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">accessibility-service</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:accessibilityEventTypes</span>=<span class="value">"typeAllMask"</span></span><br><span class="line">    <span class="attribute">android:accessibilityFeedbackType</span>=<span class="value">"feedbackSpoken"</span></span><br><span class="line">    <span class="attribute">android:accessibilityFlags</span>=<span class="value">"flagDefault"</span></span><br><span class="line">    <span class="attribute">android:canRetrieveWindowContent</span>=<span class="value">"true"</span></span><br><span class="line">    <span class="attribute">android:description</span>=<span class="value">"@string/hello_world"</span></span><br><span class="line">    <span class="attribute">android:notificationTimeout</span>=<span class="value">"100"</span></span><br><span class="line">    <span class="attribute">android:settingsActivity</span>=<span class="value">"com.example.android.accessibility.ServiceSettingsActivity"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这是一个AccessibilityService服务的配置，我们看下里面的参数。<br>比较重要的有<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:accessibilityEventTypes="typeAllMask"</span><br></pre></td></tr></table></figure></p>
+<p>看属性名也差不多可以明白，这个是用来设置响应事件的类型，typeAllMask当然就是响应所有类型的事件了。当然还有单击、长按、滑动等。<br>还有<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    android:accessibilityFeedbackType="feedbackSpoken"</span><br><span class="line">```   </span><br><span class="line">设置回馈给用户的方式，有语音播出和振动。可以配置一些TTS引擎，让它实现发音。</span><br><span class="line">另外</span><br><span class="line">```xml</span><br><span class="line">    android:notificationTimeout="100"</span><br></pre></td></tr></table></figure></p>
+<p>响应时间的设置就不用多说了<br>还有一个重要属性这里没有用到，就是<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:packageNames="com.example.android.apis"</span><br></pre></td></tr></table></figure></p>
+<p>可以指定响应某个应用的事件，这里因为要响应所有应用的事件，所以不填，默认就是响应所有应用的事件。比如说要写一个微信抢红包的辅助程序，就可以在这里填写微信的包名，便可以监听微信产生的事件了。</p>
+<p>接下来看一下具体应用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAccessibilityEvent</span><span class="params">(AccessibilityEvent event)</span> </span>&#123;</span><br><span class="line"><span class="keyword">int</span> eventType = event.getEventType();</span><br><span class="line">String eventText = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">switch</span> (eventType) &#123;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_VIEW_CLICKED:</span><br><span class="line">eventText = <span class="string">"TYPE_VIEW_CLICKED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_VIEW_FOCUSED:</span><br><span class="line">eventText = <span class="string">"TYPE_VIEW_FOCUSED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_VIEW_LONG_CLICKED:</span><br><span class="line">eventText = <span class="string">"TYPE_VIEW_LONG_CLICKED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_VIEW_SELECTED:</span><br><span class="line">eventText = <span class="string">"TYPE_VIEW_SELECTED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED:</span><br><span class="line">eventText = <span class="string">"TYPE_VIEW_TEXT_CHANGED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:</span><br><span class="line">eventText = <span class="string">"TYPE_WINDOW_STATE_CHANGED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:</span><br><span class="line">eventText = <span class="string">"TYPE_NOTIFICATION_STATE_CHANGED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_TOUCH_EXPLORATION_GESTURE_END:</span><br><span class="line">eventText = <span class="string">"TYPE_TOUCH_EXPLORATION_GESTURE_END"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_ANNOUNCEMENT:</span><br><span class="line">eventText = <span class="string">"TYPE_ANNOUNCEMENT"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_TOUCH_EXPLORATION_GESTURE_START:</span><br><span class="line">eventText = <span class="string">"TYPE_TOUCH_EXPLORATION_GESTURE_START"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_VIEW_HOVER_ENTER:</span><br><span class="line">eventText = <span class="string">"TYPE_VIEW_HOVER_ENTER"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_VIEW_HOVER_EXIT:</span><br><span class="line">eventText = <span class="string">"TYPE_VIEW_HOVER_EXIT"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_VIEW_SCROLLED:</span><br><span class="line">eventText = <span class="string">"TYPE_VIEW_SCROLLED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:</span><br><span class="line">eventText = <span class="string">"TYPE_VIEW_TEXT_SELECTION_CHANGED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:</span><br><span class="line">eventText = <span class="string">"TYPE_WINDOW_CONTENT_CHANGED"</span>;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(eventText);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，这里将监听到的事件输出，运行看下结果：<br><img src="http://7xjs0n.com1.z0.glb.clouddn.com/f7f01425262623.png" alt=""><br>通过这里我们就可以了解到怎样的点击对应着怎样的事件。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/android/">android</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/03/02/AccessibilityService 功能详解/" data-title="AccessibilityService 功能详解 | Krelve技术之旅" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/06/16/markdown/" title="MarkDown">
+  <strong>上一篇：</strong><br/>
+  <span>
+  MarkDown</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/01/AccessibilityService 简单应用/"  title="AccessibilityService 简单应用">
+ <strong>下一篇：</strong><br/> 
+ <span>AccessibilityService 简单应用
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/03/02/AccessibilityService 功能详解/" data-title="AccessibilityService 功能详解" data-url="http://yoursite.com/2015/03/02/AccessibilityService 功能详解/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/android/" title="android">android<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://krelve.com" target="_blank" title="Krelve技术之旅">Krelve技术之旅</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m krelve. <br/>
+			This is my blog , wish you like it.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/iKrelve" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:krelve@yeah.net" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="krelve">krelve</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"krelve"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
