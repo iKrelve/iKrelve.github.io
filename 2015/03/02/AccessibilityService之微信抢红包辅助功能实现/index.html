@@ -1,0 +1,425 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>AccessibilityService之微信抢红包辅助功能实现 | Krelve技术之旅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="krelve">
+    
+
+    
+    <meta name="description" content="这次我们来使用AccessibilityService实现一个微信抢红包的辅助工具。先来一个简单的效果图，最后会有一个完整的效果图：首先，先回想一下微信红包的领取流程。1.通知栏出现微信红包的消息2.点击通知栏，进入领取红包界面3.点击领取红包，领取成功后，进入拆红包界面4.拆红包，显示获得金额5.等待下一个红包那么根据之前学到的关于AccessibilityService的知识可以这样填写配置文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AccessibilityService之微信抢红包辅助功能实现">
+<meta property="og:url" content="http://yoursite.com/2015/03/02/AccessibilityService之微信抢红包辅助功能实现/index.html">
+<meta property="og:site_name" content="Krelve技术之旅">
+<meta property="og:description" content="这次我们来使用AccessibilityService实现一个微信抢红包的辅助工具。先来一个简单的效果图，最后会有一个完整的效果图：首先，先回想一下微信红包的领取流程。1.通知栏出现微信红包的消息2.点击通知栏，进入领取红包界面3.点击领取红包，领取成功后，进入拆红包界面4.拆红包，显示获得金额5.等待下一个红包那么根据之前学到的关于AccessibilityService的知识可以这样填写配置文">
+<meta property="og:image" content="http://7xjs0n.com1.z0.glb.clouddn.com/ef181425301332.gif">
+<meta property="og:image" content="http://7xjs0n.com1.z0.glb.clouddn.com/de24a7c360efae0edeb6a9ae056e2f5520150302131455%20%281%29.gif">
+<meta property="og:updated_time" content="2015-06-16T15:16:29.152Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AccessibilityService之微信抢红包辅助功能实现">
+<meta name="twitter:description" content="这次我们来使用AccessibilityService实现一个微信抢红包的辅助工具。先来一个简单的效果图，最后会有一个完整的效果图：首先，先回想一下微信红包的领取流程。1.通知栏出现微信红包的消息2.点击通知栏，进入领取红包界面3.点击领取红包，领取成功后，进入拆红包界面4.拆红包，显示获得金额5.等待下一个红包那么根据之前学到的关于AccessibilityService的知识可以这样填写配置文">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Krelve技术之旅" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Krelve技术之旅">Krelve技术之旅</a></h1>
+				<h2 class="blog-motto">用代码渲染生活</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/android">Android</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/02/AccessibilityService之微信抢红包辅助功能实现/" title="AccessibilityService之微信抢红包辅助功能实现" itemprop="url">AccessibilityService之微信抢红包辅助功能实现</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="krelve" target="_blank" itemprop="author">krelve</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-02T12:41:36.000Z" itemprop="datePublished"> 发表于 2015-03-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<p>这次我们来使用AccessibilityService实现一个微信抢红包的辅助工具。<br>先来一个简单的效果图，最后会有一个完整的效果图：<br><img src="http://7xjs0n.com1.z0.glb.clouddn.com/ef181425301332.gif" alt=""><br>首先，先回想一下微信红包的领取流程。<br>1.通知栏出现微信红包的消息<br>2.点击通知栏，进入领取红包界面<br>3.点击领取红包，领取成功后，进入拆红包界面<br>4.拆红包，显示获得金额<br>5.等待下一个红包<br>那么根据之前学到的关于AccessibilityService的知识可以这样填写配置文件：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">service</span></span><br><span class="line">            <span class="attribute">android:name</span>=<span class="value">"krelve.demo.rob.RobMoney"</span></span><br><span class="line">            <span class="attribute">android:enabled</span>=<span class="value">"true"</span></span><br><span class="line">            <span class="attribute">android:exported</span>=<span class="value">"true"</span></span><br><span class="line">            <span class="attribute">android:label</span>=<span class="value">"@string/app_name"</span></span><br><span class="line">            <span class="attribute">android:permission</span>=<span class="value">"android.permission.BIND_ACCESSIBILITY_SERVICE"</span> &gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.accessibilityservice.AccessibilityService"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">meta-data</span></span><br><span class="line">                <span class="attribute">android:name</span>=<span class="value">"android.accessibilityservice"</span></span><br><span class="line">                <span class="attribute">android:resource</span>=<span class="value">"@xml/rob_service_config"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>AccessibilityService的相关配置 xml/rob_service_config:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">accessibility-service</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:accessibilityEventTypes</span>=<span class="value">"typeNotificationStateChanged|typeWindowStateChanged"</span></span><br><span class="line">    <span class="attribute">android:accessibilityFeedbackType</span>=<span class="value">"feedbackGeneric"</span></span><br><span class="line">    <span class="attribute">android:accessibilityFlags</span>=<span class="value">"flagDefault"</span></span><br><span class="line">    <span class="attribute">android:canRetrieveWindowContent</span>=<span class="value">"true"</span></span><br><span class="line">    <span class="attribute">android:description</span>=<span class="value">"@string/accessibility_description"</span></span><br><span class="line">    <span class="attribute">android:notificationTimeout</span>=<span class="value">"100"</span></span><br><span class="line">    <span class="attribute">android:packageNames</span>=<span class="value">"com.tencent.mm"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>由于我们这里只需要监听微信产生的事件，所以packageNames属性应当填写微信的包名。<br>下面便是最重要的抢红包代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> krelve.demo.rob;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> android.accessibilityservice.AccessibilityService;</span><br><span class="line"><span class="keyword">import</span> android.annotation.SuppressLint;</span><br><span class="line"><span class="keyword">import</span> android.app.Notification;</span><br><span class="line"><span class="keyword">import</span> android.app.PendingIntent;</span><br><span class="line"><span class="keyword">import</span> android.app.PendingIntent.CanceledException;</span><br><span class="line"><span class="keyword">import</span> android.view.accessibility.AccessibilityEvent;</span><br><span class="line"><span class="keyword">import</span> android.view.accessibility.AccessibilityNodeInfo;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RobMoney</span> <span class="keyword">extends</span> <span class="title">AccessibilityService</span> </span>&#123;</span><br><span class="line"> <span class="annotation">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAccessibilityEvent</span><span class="params">(AccessibilityEvent event)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> eventType = event.getEventType();</span><br><span class="line">  <span class="keyword">switch</span> (eventType) &#123;</span><br><span class="line">  <span class="keyword">case</span> AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:<span class="comment">// 通知栏事件</span></span><br><span class="line">   List&lt;CharSequence&gt; texts = event.getText();</span><br><span class="line">   <span class="keyword">if</span> (!texts.isEmpty()) &#123;</span><br><span class="line">    <span class="keyword">for</span> (CharSequence text : texts) &#123;</span><br><span class="line">     String content = text.toString();</span><br><span class="line">     <span class="keyword">if</span> (content.contains(<span class="string">"[微信红包]"</span>)) &#123;</span><br><span class="line">      <span class="comment">// 监听到微信红包的notification，打开通知</span></span><br><span class="line">      <span class="keyword">if</span> (event.getParcelableData() != <span class="keyword">null</span></span><br><span class="line">        &amp;&amp; event.getParcelableData() <span class="keyword">instanceof</span> Notification) &#123;</span><br><span class="line">       Notification notification = (Notification) event</span><br><span class="line">         .getParcelableData();</span><br><span class="line">       PendingIntent pendingIntent = notification.contentIntent;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">        pendingIntent.send();</span><br><span class="line">       &#125; <span class="keyword">catch</span> (CanceledException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">      &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:</span><br><span class="line">   String className = event.getClassName().toString();</span><br><span class="line">   <span class="keyword">if</span> (className.equals(<span class="string">"com.tencent.mm.ui.LauncherUI"</span>)) &#123;</span><br><span class="line">    getPacket();<span class="comment">// 领取红包</span></span><br><span class="line">   &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className</span><br><span class="line">     .equals(<span class="string">"com.tencent.mm.plugin.luckymoney.ui.LuckyMoneyReceiveUI"</span>)) &#123;</span><br><span class="line">    openPacket();<span class="comment">// 打开红包</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="annotation">@SuppressLint</span>(<span class="string">"NewApi"</span>)</span><br><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">openPacket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();</span><br><span class="line">  <span class="keyword">if</span> (nodeInfo != <span class="keyword">null</span>) &#123;</span><br><span class="line">   List&lt;AccessibilityNodeInfo&gt; list = nodeInfo</span><br><span class="line">     .findAccessibilityNodeInfosByText(<span class="string">"拆红包"</span>);</span><br><span class="line">   <span class="keyword">for</span> (AccessibilityNodeInfo n : list) &#123;</span><br><span class="line">    n.performAction(AccessibilityNodeInfo.ACTION_CLICK);</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="annotation">@SuppressLint</span>(<span class="string">"NewApi"</span>)</span><br><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getPacket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  AccessibilityNodeInfo rootNode = getRootInActiveWindow();</span><br><span class="line">  <span class="keyword">if</span> (rootNode != <span class="keyword">null</span>) &#123;</span><br><span class="line">   List&lt;AccessibilityNodeInfo&gt; nodeInfos = rootNode</span><br><span class="line">     .findAccessibilityNodeInfosByText(<span class="string">"领取红包"</span>);</span><br><span class="line">   <span class="keyword">for</span> (AccessibilityNodeInfo nodeInfo : nodeInfos) &#123;</span><br><span class="line">    nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="annotation">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onInterrupt</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">在onAccessibilityEvent中，监听AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED和AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED事件。如果是通知栏事件，那么获取通知事件的text，如果包含 [微信红包] 字样，则说明是一个红包的通知事件。 </span><br><span class="line">然后通过event.getParcelableData()获取Notification实例对象，调用其中的pendingintent即可。 </span><br><span class="line">通知栏响应事件就是打开领取红包的界面，自己写了一个模拟微信红包的demo，来方便测试。 </span><br><span class="line">处理完通知栏事件后，就是窗体事件了。 </span><br><span class="line">进入领取红包界面后，如何找到领取红包的点击按钮并实现点击呢？ </span><br><span class="line"><span class="number">1</span>.确定当前窗体界面是领取红包界面：event.getClassName().toString() 通过判断className来确定 </span><br><span class="line"><span class="number">2</span>.AccessibilityNodeInfo 中有这样一个方法：findAccessibilityNodeInfosByText() </span><br><span class="line">所以可以通过寻找 领取红包 字样来找到领取红包的点击事件。</span><br><span class="line">```java</span><br><span class="line">AccessibilityNodeInfo rootNode = getRootInActiveWindow();</span><br><span class="line">  <span class="keyword">if</span> (rootNode != <span class="keyword">null</span>) &#123;</span><br><span class="line">   List&lt;AccessibilityNodeInfo&gt; nodeInfos = rootNode</span><br><span class="line">     .findAccessibilityNodeInfosByText(<span class="string">"领取红包"</span>);</span><br><span class="line">   <span class="keyword">for</span> (AccessibilityNodeInfo nodeInfo : nodeInfos) &#123;</span><br><span class="line">    nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样就可以实现领取红包的点击。<br>既然已经获得红包，那么就要拆红包了。<br>类似领红包，拆红包只是类名和搜索的text不一样而已：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();</span><br><span class="line">  <span class="keyword">if</span> (nodeInfo != <span class="keyword">null</span>) &#123;</span><br><span class="line">   List&lt;AccessibilityNodeInfo&gt; list = nodeInfo</span><br><span class="line">     .findAccessibilityNodeInfosByText(<span class="string">"拆红包"</span>);</span><br><span class="line">   <span class="keyword">for</span> (AccessibilityNodeInfo n : list) &#123;</span><br><span class="line">    n.performAction(AccessibilityNodeInfo.ACTION_CLICK);</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p> 这样就实现了一个最基本的抢红包辅助工具，剩下的细节可以慢慢实现。<br>最后看一下最终的效果图：<br><img src="http://7xjs0n.com1.z0.glb.clouddn.com/de24a7c360efae0edeb6a9ae056e2f5520150302131455%20%281%29.gif" alt=""></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/android/">android</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/03/02/AccessibilityService之微信抢红包辅助功能实现/" data-title="AccessibilityService之微信抢红包辅助功能实现 | Krelve技术之旅" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/06/16/markdown/" title="MarkDown">
+  <strong>上一篇：</strong><br/>
+  <span>
+  MarkDown</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/02/AccessibilityService 功能详解/"  title="AccessibilityService 功能详解">
+ <strong>下一篇：</strong><br/> 
+ <span>AccessibilityService 功能详解
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/03/02/AccessibilityService之微信抢红包辅助功能实现/" data-title="AccessibilityService之微信抢红包辅助功能实现" data-url="http://yoursite.com/2015/03/02/AccessibilityService之微信抢红包辅助功能实现/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/android/" title="android">android<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://krelve.com" target="_blank" title="Krelve技术之旅">Krelve技术之旅</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m krelve. <br/>
+			This is my blog , wish you like it.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/iKrelve" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:krelve@yeah.net" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="krelve">krelve</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"krelve"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
