@@ -5,7 +5,7 @@
   <subtitle><![CDATA[用代码渲染生活]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com//"/>
-  <updated>2015-06-18T10:28:04.041Z</updated>
+  <updated>2015-06-18T10:29:03.865Z</updated>
   <id>http://yoursite.com//</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2015/06/18/Android%E5%9B%BE%E7%89%87%E8%BD%AE%E6%92%AD%E7%BB%84%E4%BB%B6/"/>
     <id>http://yoursite.com/2015/06/18/Android图片轮播组件/</id>
     <published>2015-06-18T09:54:44.000Z</published>
-    <updated>2015-06-18T10:28:04.041Z</updated>
+    <updated>2015-06-18T10:29:03.865Z</updated>
     <content type="html"><![CDATA[<p>之前做高仿知乎日报的时候实现了一个图片轮播的功能，但只适用于当时的场景。现在闲下来了，便将图片轮播的功能封装成一个组件，只需要在布局文件中设置控件并在代码中设置图片的url地址或资源id即可。<br>实现过程其实很简单，主要的问题就在于如何实现图片的循环滚动。<br>在网上看到一些方法，大多数是用ViewPager来实现的，但是用ViewPager来实现就导致了从最后一张切换回第一张的时候该如何切换的问题。<br>看到有很多人在重写<strong>PagerAdapter</strong>的时候把<strong>getCount()</strong>的返回值设置为一个很大的整数，来保证图片的循环滚动，很显然这种方法非常不靠谱。<br><strong>那应该怎么来实现呢？</strong><br>既然从最后一张切换到第一张是存在问题，那就不让它从最后一张切换到第一张了呗，在本来的最后一张图片后面，再添加一张和第一张一样的图片来充当一个缓冲。若此时显示的是眼中的最后一张图片，那么在滚动后，实际上显示出了那张和第一张一样的图片。那么在此刻直接调用<strong>setCurrentItem</strong>将当前item设置为第一张图片，就悄悄地将图片进行了调换，很完美的实现了图片的循环滚动。<br>具体代码在github上：<a href="https://github.com/iKrelve/Kanner" target="_blank" rel="external">Kanner</a><br><strong>用法：</strong></p>
 <ol>
 <li><p>在布局文件中引入控件:</p>
