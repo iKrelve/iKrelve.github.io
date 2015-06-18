@@ -68,6 +68,38 @@
   </entry>
   
   <entry>
+    <title><![CDATA[assets与raw的区别]]></title>
+    <link href="http://yoursite.com/2015/03/15/assets%E4%B8%8Eraw%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://yoursite.com/2015/03/15/assets与raw的区别/</id>
+    <published>2015-03-15T06:49:03.000Z</published>
+    <updated>2015-06-18T15:22:05.297Z</updated>
+    <content type="html"><![CDATA[<p><strong>相同点：</strong></p>
+<ul>
+<li>两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制<br><strong>不同点：</strong></li>
+<li>res/raw中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即R.id.filename；assets文件夹下的文件不会被映射到R.java中，访问的时候需要AssetManager类。</li>
+<li>res/raw不可以有目录结构，而assets则可以有目录结构，也就是assets目录下可以再建立文件夹<br><strong>读取方式：</strong></li>
+<li><p>读取res/raw下的文件资源，通过以下方式获取输入流来进行写操作</p>
+<p>  InputStream is = getResources().openRawResource(R.id.filename);  </p>
+</li>
+<li><p>读取assets下的文件资源，通过以下方式获取输入流来进行写操作</p>
+<p>  AssetManager am = null;<br>  am = getAssets();<br>  InputStream is = am.open(“filename”);  </p>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><strong>相同点：</strong></p>
+<ul>
+<li>两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制<br><strong>不同点：</strong></li>
+<li>res/raw中的文件会被映射到R.java文件中，访问的时候]]>
+    </summary>
+    
+      <category term="android" scheme="http://yoursite.com/tags/android/"/>
+    
+      <category term="android" scheme="http://yoursite.com/categories/android/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[AccessibilityService之微信抢红包辅助功能实现]]></title>
     <link href="http://yoursite.com/2015/03/02/AccessibilityService%E4%B9%8B%E5%BE%AE%E4%BF%A1%E6%8A%A2%E7%BA%A2%E5%8C%85%E8%BE%85%E5%8A%A9%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/"/>
     <id>http://yoursite.com/2015/03/02/AccessibilityService之微信抢红包辅助功能实现/</id>

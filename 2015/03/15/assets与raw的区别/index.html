@@ -4,24 +4,35 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Android图片轮播组件 | Krelve技术之旅</title>
+    <title>assets与raw的区别 | Krelve技术之旅</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="krelve">
     
 
     
-    <meta name="description" content="之前做高仿知乎日报的时候实现了一个图片轮播的功能，但只适用于当时的场景。现在闲下来了，便将图片轮播的功能封装成一个组件，只需要在布局文件中设置控件并在代码中设置图片的url地址或资源id即可。实现过程其实很简单，主要的问题就在于如何实现图片的循环滚动。在网上看到一些方法，大多数是用ViewPager来实现的，但是用ViewPager来实现就导致了从最后一张切换回第一张的时候该如何切换的问题。看到有">
+    <meta name="description" content="相同点：
+
+两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制不同点：
+res/raw中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即R.id.filename；assets文件夹下的文件不会被映射到R.java中，访问的时候需要AssetManager类。
+res/raw不可以有目录结构，而assets则可以有目录结构，也就是assets目录下可以再建立文">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android图片轮播组件">
-<meta property="og:url" content="http://yoursite.com/2015/06/18/Android图片轮播组件/index.html">
+<meta property="og:title" content="assets与raw的区别">
+<meta property="og:url" content="http://yoursite.com/2015/03/15/assets与raw的区别/index.html">
 <meta property="og:site_name" content="Krelve技术之旅">
-<meta property="og:description" content="之前做高仿知乎日报的时候实现了一个图片轮播的功能，但只适用于当时的场景。现在闲下来了，便将图片轮播的功能封装成一个组件，只需要在布局文件中设置控件并在代码中设置图片的url地址或资源id即可。实现过程其实很简单，主要的问题就在于如何实现图片的循环滚动。在网上看到一些方法，大多数是用ViewPager来实现的，但是用ViewPager来实现就导致了从最后一张切换回第一张的时候该如何切换的问题。看到有">
-<meta property="og:image" content="http://7xjs0n.com1.z0.glb.clouddn.com/kanner.gif">
-<meta property="og:updated_time" content="2015-06-18T10:34:40.780Z">
+<meta property="og:description" content="相同点：
+
+两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制不同点：
+res/raw中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即R.id.filename；assets文件夹下的文件不会被映射到R.java中，访问的时候需要AssetManager类。
+res/raw不可以有目录结构，而assets则可以有目录结构，也就是assets目录下可以再建立文">
+<meta property="og:updated_time" content="2015-06-18T15:22:05.297Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android图片轮播组件">
-<meta name="twitter:description" content="之前做高仿知乎日报的时候实现了一个图片轮播的功能，但只适用于当时的场景。现在闲下来了，便将图片轮播的功能封装成一个组件，只需要在布局文件中设置控件并在代码中设置图片的url地址或资源id即可。实现过程其实很简单，主要的问题就在于如何实现图片的循环滚动。在网上看到一些方法，大多数是用ViewPager来实现的，但是用ViewPager来实现就导致了从最后一张切换回第一张的时候该如何切换的问题。看到有">
+<meta name="twitter:title" content="assets与raw的区别">
+<meta name="twitter:description" content="相同点：
+
+两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制不同点：
+res/raw中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即R.id.filename；assets文件夹下的文件不会被映射到R.java中，访问的时候需要AssetManager类。
+res/raw不可以有目录结构，而assets则可以有目录结构，也就是assets目录下可以再建立文">
 
     
     <link rel="alternative" href="/atom.xml" title="Krelve技术之旅" type="application/atom+xml">
@@ -79,29 +90,31 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/18/Android图片轮播组件/" title="Android图片轮播组件" itemprop="url">Android图片轮播组件</a>
+      <a href="/2015/03/15/assets与raw的区别/" title="assets与raw的区别" itemprop="url">assets与raw的区别</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="krelve" target="_blank" itemprop="author">krelve</a>
 		
   <p class="article-time">
-    <time datetime="2015-06-18T09:54:44.000Z" itemprop="datePublished"> 发表于 2015-06-18</time>
+    <time datetime="2015-03-15T06:49:03.000Z" itemprop="datePublished"> 发表于 2015-03-15</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		<p>之前做高仿知乎日报的时候实现了一个图片轮播的功能，但只适用于当时的场景。现在闲下来了，便将图片轮播的功能封装成一个组件，只需要在布局文件中设置控件并在代码中设置图片的url地址或资源id即可。<br>实现过程其实很简单，主要的问题就在于如何实现图片的循环滚动。<br>在网上看到一些方法，大多数是用ViewPager来实现的，但是用ViewPager来实现就导致了从最后一张切换回第一张的时候该如何切换的问题。<br>看到有很多人在重写<strong>PagerAdapter</strong>的时候把<strong>getCount()</strong>的返回值设置为一个很大的整数，来保证图片的循环滚动，很显然这种方法非常不靠谱。<br><strong>那应该怎么来实现呢？</strong><br>既然从最后一张切换到第一张是存在问题，那就不让它从最后一张切换到第一张了呗，在本来的最后一张图片后面，再添加一张和第一张一样的图片来充当一个缓冲。若此时显示的是眼中的最后一张图片，那么在滚动后，实际上显示出了那张和第一张一样的图片。那么在此刻直接调用<strong>setCurrentItem</strong>将当前item设置为第一张图片，就悄悄地将图片进行了调换，很完美的实现了图片的循环滚动。<br>具体代码在github上：<a href="https://github.com/iKrelve/Kanner" target="_blank" rel="external">Kanner</a><br><strong>用法：</strong></p>
-<ol>
-<li><p>在布局文件中引入控件:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">xmlns:tools</span>=<span class="value">"http://schemas.android.com/tools"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span> &gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">krelve.view.Kanner</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/kanner"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"250dp"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+		<p><strong>相同点：</strong></p>
+<ul>
+<li>两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制<br><strong>不同点：</strong></li>
+<li>res/raw中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即R.id.filename；assets文件夹下的文件不会被映射到R.java中，访问的时候需要AssetManager类。</li>
+<li>res/raw不可以有目录结构，而assets则可以有目录结构，也就是assets目录下可以再建立文件夹<br><strong>读取方式：</strong></li>
+<li><p>读取res/raw下的文件资源，通过以下方式获取输入流来进行写操作</p>
+<p>  InputStream is = getResources().openRawResource(R.id.filename);  </p>
 </li>
-<li><p>在代码中设置图片路径:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">		kanner = (Kanner) findViewById(R.id.kanner);</span><br><span class="line">		kanner.setImagesUrl(<span class="keyword">new</span> String[] &#123;</span><br><span class="line">				<span class="string">"http://img04.muzhiwan.com/2015/06/16/upload_557fd293326f5.jpg"</span>,</span><br><span class="line">				<span class="string">"http://img03.muzhiwan.com/2015/06/05/upload_557165f4850cf.png"</span>,</span><br><span class="line">				<span class="string">"http://img02.muzhiwan.com/2015/06/11/upload_557903dc0f165.jpg"</span>,</span><br><span class="line">				<span class="string">"http://img04.muzhiwan.com/2015/06/05/upload_5571659957d90.png"</span>,</span><br><span class="line">				<span class="string">"http://img03.muzhiwan.com/2015/06/16/upload_557fd2a8da7a3.jpg"</span> &#125;);</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line">		<span class="keyword">int</span>[] imagesRes = &#123; R.drawable.a, R.drawable.b, R.drawable.c,</span><br><span class="line">				R.drawable.d, R.drawable.e &#125;;</span><br><span class="line">		kanner.setImagesRes(imagesRes);</span><br></pre></td></tr></table></figure>
+<li><p>读取assets下的文件资源，通过以下方式获取输入流来进行写操作</p>
+<p>  AssetManager am = null;<br>  am = getAssets();<br>  InputStream is = am.open(“filename”);  </p>
 </li>
-</ol>
-<p><strong>运行：</strong><br><img src="http://7xjs0n.com1.z0.glb.clouddn.com/kanner.gif" alt=""></p>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -115,7 +128,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/android/">android</a><a href="/tags/github/">github</a>
+  <span></span> <a href="/tags/android/">android</a>
   </div>
 
 </div>
@@ -124,7 +137,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2015/06/18/Android图片轮播组件/" data-title="Android图片轮播组件 | Krelve技术之旅" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2015/03/15/assets与raw的区别/" data-title="assets与raw的区别 | Krelve技术之旅" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,11 +150,19 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2015/06/16/markdown/" title="MarkDown">
+  <strong>上一篇：</strong><br/>
+  <span>
+  MarkDown</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2015/06/16/markdown/"  title="MarkDown">
+<a href="/2015/03/02/AccessibilityService之微信抢红包辅助功能实现/"  title="AccessibilityService之微信抢红包辅助功能实现">
  <strong>下一篇：</strong><br/> 
- <span>MarkDown
+ <span>AccessibilityService之微信抢红包辅助功能实现
 </span>
 </a>
 </div>
@@ -150,7 +171,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/06/18/Android图片轮播组件/" data-title="Android图片轮播组件" data-url="http://yoursite.com/2015/06/18/Android图片轮播组件/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/15/assets与raw的区别/" data-title="assets与raw的区别" data-url="http://yoursite.com/2015/03/15/assets与raw的区别/"></div>
 </section>
 
 
