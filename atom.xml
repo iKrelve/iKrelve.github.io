@@ -72,25 +72,16 @@
     <link href="http://yoursite.com/2015/03/15/assets%E4%B8%8Eraw%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
     <id>http://yoursite.com/2015/03/15/assets与raw的区别/</id>
     <published>2015-03-15T06:49:03.000Z</published>
-    <updated>2015-06-18T15:23:23.824Z</updated>
-    <content type="html"><![CDATA[<p><strong>相同点：</strong></p>
-<ul>
-<li>两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制<br><strong>不同点：</strong></li>
-<li>res/raw中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即R.id.filename；assets文件夹下的文件不会被映射到R.java中，访问的时候需要AssetManager类。</li>
-<li>res/raw不可以有目录结构，而assets则可以有目录结构，也就是assets目录下可以再建立文件夹<br><strong>读取方式：</strong></li>
-<li><p>读取res/raw下的文件资源，通过以下方式获取输入流来进行写操作</p>
-<p>  InputStream is = getResources().openRawResource(R.id.filename);  </p>
-</li>
-<li><p>读取assets下的文件资源，通过以下方式获取输入流来进行写操作</p>
-<p>  AssetManager am = null;<br>  am = getAssets();<br>  InputStream is = am.open(“filename”);  </p>
-</li>
-</ul>
-]]></content>
+    <updated>2015-06-18T15:24:47.495Z</updated>
+    <content type="html"><![CDATA[<p><strong>相同点：</strong><br>两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制<br><strong>不同点：</strong><br>①res/raw中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即R.id.filename；assets文件夹下的文件不会被映射到R.java中，访问的时候需要AssetManager类。<br>②res/raw不可以有目录结构，而assets则可以有目录结构，也就是assets目录下可以再建立文件夹<br><strong>读取方式：</strong><br>①读取res/raw下的文件资源，通过以下方式获取输入流来进行写操作</p>
+<pre><code>InputStream <span class="keyword">is</span> = getResources().openRawResource(R.<span class="property">id</span>.filename);  
+</code></pre><p>②读取assets下的文件资源，通过以下方式获取输入流来进行写操作</p>
+<pre><code>AssetManager <span class="keyword">am</span> = null;  
+<span class="keyword">am</span> = getAssets();  
+InputStream <span class="keyword">is</span> = <span class="keyword">am</span>.<span class="keyword">open</span>(<span class="string">"filename"</span>);  
+</code></pre>]]></content>
     <summary type="html">
-    <![CDATA[<p><strong>相同点：</strong></p>
-<ul>
-<li>两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制<br><strong>不同点：</strong></li>
-<li>res/raw中的文件会被映射到R.java文件中，访问的时候]]>
+    <![CDATA[<p><strong>相同点：</strong><br>两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制<br><strong>不同点：</strong><br>①res/raw中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即R.id.f]]>
     </summary>
     
       <category term="android" scheme="http://yoursite.com/tags/android/"/>
